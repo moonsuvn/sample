@@ -38,6 +38,30 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
+    public function payCenter(User $user)
+    {
+        return view('users.pay',compact('user'));
+    }
+
+    public function payBalance(User $user,Request $request)
+    {
+        $this->validate($request,[
+            'pay' => 'required']);
+
+        $data=[];
+        if ($request->pay) {
+            $data['pay'] = $request->pay;
+            $user->increment('balance',$request->input('pay'));
+        }
+
+        $user->update($data);
+
+        session()->flash('success', '充值成功！');
+
+        return redirect()->route('users.payCenter', $user->id);
+        
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -83,4 +107,5 @@ class UsersController extends Controller
 
         return redirect()->route('users.show', $user->id);
     }
+
 }
