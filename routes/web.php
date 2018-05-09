@@ -30,3 +30,5 @@ Route::patch('/users/{user}/pay','UsersController@payBalance')->name('users.payB
 Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
+//单车
+Route::resource('bikes', 'BikesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);

@@ -12,7 +12,10 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
+	{
+		\App\Models\User::observe(\App\Observers\UserObserver::class);
+		\App\Models\Bike::observe(\App\Observers\BikeObserver::class);
+
         //
     }
 
