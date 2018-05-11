@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\BikeRequest;
 use App\Http\Requests;
 use App\Models\User;
+use App\Models\Bike;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -41,6 +44,16 @@ class UsersController extends Controller
     public function payCenter(User $user)
     {
         return view('users.pay',compact('user'));
+    }
+
+    public function rider(User $user)
+    {
+        return view('bikes.rider',compact('user'));
+    }
+
+    public function using(User $user)
+    {
+        return view('bikes.using',compact('user'));
     }
 
     public function payBalance(User $user,Request $request)
@@ -106,6 +119,33 @@ class UsersController extends Controller
         session()->flash('success', '个人资料更新成功！');
 
         return redirect()->route('users.show', $user->id);
+    }
+
+    public function riding(Bike $bikes, BikeRequest $request,User $user)
+    {
+
+        $this->validate($request, [
+            'code' => 'required',
+        ]);
+
+        $value=DB::table('bikes')->where('code',$request->input('code'))->first();
+        if(!$value)
+        {
+            session()->flash('error1','该车不存在');
+            return redirect()->route('users.rider',$user->id)->with('error1');
+        }
+        else if ($value->is_riding){
+            session()->flash('error2','该车正在使用中');
+            return redirect()->route('users.rider',$user->id)->with('error2');
+        }
+        else {
+            DB::table('bikes')->where('code', $request->input('code'))->update(['is_riding' => 1]);
+            session()->flash('success','开锁成功正在计时');
+            return redirect()->route('users.using',$user->id)->with('success');
+        }
+
+
+
     }
 
 }

@@ -26,9 +26,17 @@ Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
 Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');*/
 Route::get('/users/{user}/pay','UsersController@payCenter')->name('users.payCenter');
 Route::patch('/users/{user}/pay','UsersController@payBalance')->name('users.payBalance');
+Route::get('/users/{user}/rider','UsersController@rider')->name('users.rider');
+Route::patch('/users/{user}/riding','UsersController@riding')->name('users.riding');
+Route::get('/users/{user}/using','UsersController@using')->name('users.using');
+//Route::get('/users/{user}/riding','BikesController@riding')->name('bikes.riding');
 
 Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
 //单车
 Route::resource('bikes', 'BikesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+
+
+
+

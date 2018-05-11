@@ -4,8 +4,8 @@
       <a href="/" id="logo">Ofo App</a>
       <nav>
         <ul class="nav navbar-nav navbar-right">
+
           @if (Auth::check())
-            <li><a href="#">立即用车</a></li>
             <li><a href="{{ route('bikes.index') }}">单车列表</a></li>
             <li><a href="{{ route('users.index') }}">用户列表</a></li>
             <li class="dropdown">
@@ -13,6 +13,7 @@
                 {{ Auth::user()->name }} <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
+                <li><a href="{{ route('users.rider', Auth::user()->id ) }}">立即用车</a></li>
                 <li><a href="{{ route('users.show', Auth::user()->id) }}">个人中心</a></li>
                 <li><a href="{{ route('users.edit', Auth::user()->id) }}">编辑资料</a></li>
                 <li><a href="{{ route('users.payCenter', Auth::user()->id) }}">充值中心</li>
@@ -31,6 +32,7 @@
           @else
             <li><a href="{{ route('help') }}">帮助</a></li>
             <li><a href="{{ route('login') }}">登录</a></li>
+            <li><a href="{{ route('signup') }}">注册</a></li>
           @endif
         </ul>
       </nav>

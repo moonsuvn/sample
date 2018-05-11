@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bike;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BikeRequest;
+use Auth;
 
 class BikesController extends Controller
 {
@@ -57,4 +59,5 @@ class BikesController extends Controller
 
 		return redirect()->route('bikes.index')->with('message', 'Deleted successfully.');
 	}
+
 }
