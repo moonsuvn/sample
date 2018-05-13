@@ -19,8 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password',60);
             $table->unsignedInteger('balance')->default(0)->comment('余额');
-            $table->timestamp('start_time')->comment('开始骑行时间');
-            $table->timestamp('end_time')->comment('结束骑行时间');
             $table->rememberToken();
             $table->timestamps();
         });

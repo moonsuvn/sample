@@ -28,7 +28,9 @@ Route::get('/users/{user}/pay','UsersController@payCenter')->name('users.payCent
 Route::patch('/users/{user}/pay','UsersController@payBalance')->name('users.payBalance');
 Route::get('/users/{user}/rider','UsersController@rider')->name('users.rider');
 Route::patch('/users/{user}/riding','UsersController@riding')->name('users.riding');
-Route::get('/users/{user}/using','UsersController@using')->name('users.using');
+Route::get('/users/{user}/bikes/{value}/using','UsersController@using')->name('users.using');
+Route::post('users/{user}/used','UsersController@used')->name('users.used');
+//Route::patch('users/{user}/bikes/{bike}/used','UsersController@used')->name('users.used');
 //Route::get('/users/{user}/riding','BikesController@riding')->name('bikes.riding');
 
 Route::get('login', 'SessionsController@create')->name('login');
@@ -36,7 +38,5 @@ Route::post('login', 'SessionsController@store')->name('login');
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
 //单车
 Route::resource('bikes', 'BikesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
-
-
 
 

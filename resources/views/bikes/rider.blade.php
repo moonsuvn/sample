@@ -38,6 +38,12 @@
 
             <button type="submit" class="btn btn-primary">开始用车</button>
         </form>
+        <form method="POST" action="{{ route('users.used',$user->id) }}">
+          {{ method_field('PATCH') }}
+            {{ csrf_field() }}
+
+        
+        </form>
     </div>
   </div>
 </div>
