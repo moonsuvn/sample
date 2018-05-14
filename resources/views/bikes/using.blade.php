@@ -10,7 +10,7 @@
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
-<button onclick="s()" id="ajax">123</button>
+<button onclick="s()" id="ajax">立即还车</button>
 <div id='container' style="margin-top:60px"></div>
 <div id="tip"></div>
 

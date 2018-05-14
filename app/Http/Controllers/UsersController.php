@@ -184,4 +184,14 @@ class UsersController extends Controller
             'message'=>'还车成功']);
     }
 
+    public function riders(User $user,Rider $rider,Request $request)
+    {
+
+        $riders = Rider::where('user_id',$user->id)->orderByDesc('id')->get();
+        //$riders = DB::table('riders')->get();
+        return view('users.riders', compact('riders'));
+     
+
+    }
+
 }
