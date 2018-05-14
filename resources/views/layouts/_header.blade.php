@@ -1,6 +1,6 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <div class="col-md-offset-1 col-md-10">
+    <div class="col-md-offset-1 col-md-10 col-xs-10">
       <a href="/" id="logo">Ofo App</a>
       <nav>
         <ul class="nav navbar-nav navbar-right">
