@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('content')
 <div class="container">
@@ -6,8 +6,8 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h1>
-                    <i class="glyphicon glyphicon-align-justify"></i> Bike
-                    <a class="btn btn-success pull-right" href="{{ route('bikes.create') }}"><i class="glyphicon glyphicon-plus"></i> Create</a>
+                    <i class="glyphicon glyphicon-align-justify"></i> 单车
+                    <a class="btn btn-success pull-right" href="{{ route('bikes.create') }}"><i class="glyphicon glyphicon-plus"></i> 创建</a>
                 </h1>
             </div>
 
@@ -17,7 +17,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
-                                <th>Lng</th> <th>Lat</th> <th>Is_riding</th>
+                                <th>经度</th> <th>纬度</th> <th>状态</th>
                                 <th class="text-right">OPTIONS</th>
                             </tr>
                         </thead>
