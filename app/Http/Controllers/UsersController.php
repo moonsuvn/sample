@@ -162,16 +162,17 @@ class UsersController extends Controller
 
     public function used(Bike $bike,BikeRequest $request,User $user,Rider $rider)
     {
-        $end_lng=$request->input('longitude');
+        $end_lng=$request->input('longitude');    
         $end_lat=$request->input('latitude');
         $endtime=Carbon::now();
         $value=DB::table('bikes')->where('code',$request->input('code'))->first();
-        DB::table('bikes')->where('code',$request->input('code'))->update(['is_riding' => 0]);
-        DB::table('bikes')->where('code',$request->input('code'))->update(['lng' => $end_lng]);
-        DB::table('bikes')->where('code',$request->input('code'))->update(['lat' => $end_lat]);
         Rider::where('user_id',$user->id)->orderByDesc('id')->first()->update(['end_at'=>$endtime]);
         Rider::where('user_id',$user->id)->orderByDesc('id')->first()->update(['end_lng'=>$end_lng]);
         Rider::where('user_id',$user->id)->orderByDesc('id')->first()->update(['end_lat'=>$end_lat]);
+        $bike_id=Rider::where('user_id',$user->id)->orderByDesc('id')->first()->bike_id;
+        DB::table('bikes')->where('id',$bike_id)->update(['lng' => $end_lng]);
+        DB::table('bikes')->where('id',$bike_id)->update(['lat' => $end_lat]);
+        DB::table('bikes')->where('id',$bike_id)->update(['is_riding' => 0]);
         $over=Rider::where('user_id',$user->id)->orderByDesc('id')->first()->start_at;
         $differTime=Carbon::now()->diffInSeconds($over);
         $money=$differTime*0.1;

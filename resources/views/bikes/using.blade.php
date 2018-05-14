@@ -1,178 +1,79 @@
+<!doctype html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>浏览器定位</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=d0f548836c9d59d72e30767cc82baaf6&plugin=AMap.Geolocation"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript">
-    //计时器
-    var c=0
-    var t
-    function timedCount()
-    {
-        document.getElementById('txt').value=c
-        c=c+1
-        t=setTimeout("timedCount()",1000)
-    }
+<body>
+<button onclick="s()" id="ajax">123</button>
+<div id='container' style="margin-top:60px"></div>
+<div id="tip"></div>
 
-    function stopCount()
-    {
-        c=0;
-        setTimeout("document.getElementById('txt').value=0",0);
-        clearTimeout(t);
-    }
-    //经纬度计算
-    var totalDistance = 0.0;
-    var lastLat;
-    var lastLong;
-
-    function toRadians(degree) {
-      return this * Math.PI / 180;
-  }
-
-
-  function distance(latitude1, longitude1, latitude2, longitude2) {
-      // R是地球半径（KM）
-      var R = 6371;
-
-      var deltaLatitude = toRadians(latitude2-latitude1);
-      var deltaLongitude = toRadians(longitude2-longitude1);
-      latitude1 = toRadians(latitude1);
-      latitude2 = toRadians(latitude2);
-
-      var a = Math.sin(deltaLatitude/2) *
-      Math.sin(deltaLatitude/2) +
-      Math.cos(latitude1) *
-      Math.cos(latitude2) *
-      Math.sin(deltaLongitude/2) *
-      Math.sin(deltaLongitude/2);
-
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      var d = R * c;
-      return d;
-  }
-
-
-  function updateStatus(message) {
-    document.getElementById("status").innerHTML = message;
-}
-
-function loadDemo() {
-    if(navigator.geolocation) {
-        updateStatus("浏览器支持HTML5 Geolocation。");
-        navigator.geolocation.watchPosition(updateLocation, handleLocationError, {maximumAge:20000});
-    }
-}
-
-$(document).ready(function(){
-    $("#ajax").click(function(){
-        $.post({
-            url:"{{ route('users.used',$user->id)}}",
-            data:{
-                longitude:'163.1234567',
-                latitude:'116.1234567',
-                _token: "{{ csrf_token() }}"
-            },
-            success:function(res){
-                alert(res.message);
-                //跳转
-                window.location.href="{{ route('users.rider',$user) }}";
-            }
-        }
-        );
+<script type="text/javascript">
+/***************************************
+由于Chrome、IOS10等已不再支持非安全域的浏览器定位请求，为保证定位成功率和精度，请尽快升级您的站点到HTTPS。
+***************************************/
+    var map, geolocation;
+    //加载地图，调用浏览器定位服务
+    map = new AMap.Map('container', {
+        resizeEnable: true
     });
-});
-
-function updateLocation(position) {
-    window.latitude = position.coords.latitude;
-    window.longitude = position.coords.longitude;
-    window.accuracy = position.coords.accuracy;
-
-
-    document.getElementById("latitude").innerHTML = latitude;
-    document.getElementById("longitude").innerHTML = longitude;
-    document.getElementById("accuracy").innerHTML = accuracy;
-
-
-       // 如果accuracy的值太大，我们认为它不准确，不用它计算距离
-        if (accuracy >= 500) {
-            updateStatus("这个数据太不靠谱，需要更准确的数据来计算本次移动距离。");
-            return};
-
-        // 计算移动距离
-
-        if ((lastLat != null) && (lastLong != null)) {
-            var currentDistance = distance(latitude, longitude, lastLat, lastLong);
-            document.getElementById("currDist").innerHTML =
-            "本次移动距离：" + currentDistance.toFixed(4) + " 千米";
-
-            totalDistance += currentDistance;
-
-            document.getElementById("totalDist").innerHTML =
-            "总计移动距离：" + currentDistance.toFixed(4) + " 千米";
-        }
-
-        lastLat = latitude;
-        lastLong = longitude;
-
-        updateStatus("计算移动距离成功。");
+        geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+            buttonPosition:'RB'
+        });
+        map.addControl(geolocation);
+        geolocation.getCurrentPosition();
+        
+        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    //解析定位结果
+    function onComplete(data) {
+        var str=['定位成功'];
+        longitude=data.position.getLng();
+        latitude=data.position.getLat();
+        longitude=float(longitude);
+        latitude=float(latitude);
+        str.push('经度：' + data.position.getLng());
+        str.push('纬度：' + data.position.getLat());
+        if(data.accuracy){
+             str.push('精度：' + data.accuracy + ' 米');
+        }//如为IP精确定位结果则没有精度信息
+        str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+        document.getElementById('tip').innerHTML = str.join('<br>');
     }
-
-    function handleLocationError(error) {
-        switch(error.code)
-        {
-            case 0:
-            updateStatus("尝试获取您的位置信息时发生错误：" + error.message);
-            break;
-            case 1:
-            updateStatus("用户拒绝了获取位置信息请求。");
-            break;
-            case 2:
-            updateStatus("浏览器无法获取您的位置信息：" + error.message);
-            break;
-            case 3:
-            updateStatus("获取您位置信息超时。");
-            break;
-        }
+    //解析定位错误信息
+    function onError(data) {
+        document.getElementById('tip').innerHTML = '定位失败';
     }
+      
 
-
+    function s()
+    {
+        //alert(latitude);
+        $.post({
+        url:"{{ route('users.used',$user->id)}}",
+        data:{
+            longitude:longitude,
+            latitude:latitude,
+            _token: "{{ csrf_token() }}"
+        },
+        success:function(res){
+            alert(res.message);
+            //跳转
+            window.location.href="{{ route('users.rider',$user) }}";
+        }
+        });
+    }
+    
 </script>
-</head>
-
-<body onload="loadDemo();timedCount()">
-
-    <!--<form method="POST" action="{{ route('users.used',$user->id)}}">
-        {{ method_field('PATCH') }}
-        {{ csrf_field() }}
-        <input type="text" id="txt">
-        <div class="form-group">
-            <label for="code">单车编码：</label>
-            <input type="text" name="code" class="form-control">
-        </div>
-        <input type="submit" value="结束用车" onClick="stopCount()">
-    </form>-->
-
-    <h1>HTML5 Geolocation距离跟踪器</h1>
-
-    <p id="status">该浏览器不支持HTML5 Geolocation</p>
-
-    <h2>当前位置：</h2>
-    <table border="1">
-        <tr>
-            <td width="40" scope="col">纬度</th>
-                <td width="114" id="latitude" for="latitude">?</td>
-            </tr>
-            <tr>
-                <td>经度</td>
-                <td id="longitude" for="longitude">?</td>
-            </tr>
-            <tr>
-                <td>准确度</td>
-                <td id="accuracy">?</td>
-            </tr>
-        </table>
-
-        <h4 id="currDist">本次移动距离：0 千米</h4>
-        <h4 id="totalDist">总计移动距离：0 千米</h4>
-        <button type="button" id="ajax">这是ajax的测试按钮</button>
-    </body>
-
-    </html>
+</body>
+</html>
