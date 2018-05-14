@@ -4,6 +4,7 @@
     <title>@yield('title', 'OfO App')</title>
     <link rel="stylesheet" href="/css/app.css">
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=ee399e130ab26d2bf52bbff59b82eff3&plugin=AMap.Riding&plugin=AMap.Autocomplete"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
     <style type="text/css">
         #container {
