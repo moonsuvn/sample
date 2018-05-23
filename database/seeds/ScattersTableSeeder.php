@@ -13,7 +13,7 @@ class ScattersTableSeeder extends Seeder
     public function run()
     {
         //生成数据集合
-        $scatters = factory(Scatter::class)->times(1000)->make();
+        $scatters = factory(Scatter::class)->times(300)->make();
         Scatter::insert($scatters->toArray());
     }
 }
