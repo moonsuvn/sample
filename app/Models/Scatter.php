@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Scatter extends Model
 {
-    protected $fillable = ['id', 'code','lnglat'];
+    protected $fillable = ['id','lnglat'];
 }

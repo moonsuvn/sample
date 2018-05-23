@@ -15,7 +15,6 @@ class CreateScattersTable extends Migration
     {
         Schema::create('scatters', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('code')->comment('单车编码');
             $table->string('lnglat')->comment('经纬度');
             $table->timestamps();
         });

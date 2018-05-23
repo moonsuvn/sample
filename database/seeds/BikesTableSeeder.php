@@ -10,8 +10,8 @@ class BikesTableSeeder extends Seeder
     {
 
     	//生成数据集合
-        $bikes = factory(Bike::class)->times(10)->make();
-            
+        $bikes = factory(Bike::class)->times(1000)->make();
+        Bike::insert($bikes->toArray());    
         
     }
 
