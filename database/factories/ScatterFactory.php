@@ -4,8 +4,8 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\Scatter::class, function (Faker $faker) {
 	$date_time = $faker->date . ' ' . $faker->time;
-    $lng=$faker->randomFloat($nbMaxDecimals = NULL, $min = 116.3580000, $max = 118.6670000);
-    $lat=$faker->randomFloat($nbMaxDecimals = NULL, $min = 33.7170000, $max = 34.9760000);
+    $lng=$faker->randomFloat($nbMaxDecimals = NULL, $min = 117.1380000, $max = 117.1670000);
+    $lat=$faker->randomFloat($nbMaxDecimals = NULL, $min = 34.2070000, $max = 34.2260000);
     $lnglat=$lng.','.$lat;
 
     return [
