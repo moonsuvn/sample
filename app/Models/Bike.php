@@ -4,5 +4,5 @@ namespace App\Models;
 
 class Bike extends Model
 {
-    protected $fillable = ['lng', 'lat', 'is_riding'];
+    protected $fillable = ['lng', 'lat','code','is_riding'];
 }

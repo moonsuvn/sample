@@ -9,20 +9,10 @@ class BikesTableSeeder extends Seeder
     public function run()
     {
 
-        $faker = app(Faker\Generator::class);
-
-    
     	//生成数据集合
-        $bikes = factory(Bike::class)
-                 ->times(10)
-                 ->make()
-                 ->each(function ($bike, $index) 
-        use ($bikes,$faker)
-        {
+        $bikes = factory(Bike::class)->times(10)->make();
             
-        });
-
-        Bike::insert($bikes->toArray());
+        
     }
 
 }

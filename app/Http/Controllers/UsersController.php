@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Models\User;
 use App\Models\Bike;
 use App\Models\Rider;
+use App\Models\Scatter;
 use Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -164,6 +165,9 @@ class UsersController extends Controller
     {
         $end_lng=$request->input('longitude');    
         $end_lat=$request->input('latitude');
+        $scatter_lng=(string)$end_lng;
+        $scatter_lat=(string)$end_lat;
+        $scatter=$scatter_lng.','.$scatter_lat;
         $endtime=Carbon::now();
         $value=DB::table('bikes')->where('code',$request->input('code'))->first();
         Rider::where('user_id',$user->id)->orderByDesc('id')->first()->update(['end_at'=>$endtime]);
@@ -173,6 +177,7 @@ class UsersController extends Controller
         DB::table('bikes')->where('id',$bike_id)->update(['lng' => $end_lng]);
         DB::table('bikes')->where('id',$bike_id)->update(['lat' => $end_lat]);
         DB::table('bikes')->where('id',$bike_id)->update(['is_riding' => 0]);
+        Scatter::where('id',$bike_id)->update(['lnglat' => $scatter]);
         $over=Rider::where('user_id',$user->id)->orderByDesc('id')->first()->start_at;
         $differTime=Carbon::now()->diffInSeconds($over);
         $money=$differTime*0.1;
