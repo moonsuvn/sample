@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <title>浏览器定位</title>
+    <title>正在计时</title>
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=d0f548836c9d59d72e30767cc82baaf6&plugin=AMap.Geolocation"></script>
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
@@ -23,6 +23,33 @@
     map = new AMap.Map('container', {
         resizeEnable: true
     });
+
+    /*addCloudLayer();  //叠加云数据图层
+    function addCloudLayer() {
+        //加载云图层插件
+        map.plugin('AMap.CloudDataLayer', function() {
+            var layerOptions = {
+                clickable: true
+            };
+            var cloudDataLayer = new AMap.CloudDataLayer('5b060ee4305a2a668877b2eb', layerOptions); //实例化云图层类
+            cloudDataLayer.setMap(map); //叠加云图层到地图
+            AMap.event.addListener(cloudDataLayer, 'click', function(result) {
+                var clouddata = result.data;
+                var photo = [];
+                if (clouddata._image[0]) {//如果有上传的图片
+                    photo = ['<img width=240 height=100 src="' + clouddata._image[0]._preurl + '"><br>'];
+                }
+                var infoWindow = new AMap.InfoWindow({
+                    content: "<font class='title'>" + clouddata._name + "</font><hr/>" + photo.join("") + "地址：" + clouddata._address + "<br />" + "创建时间：" + clouddata._createtime + "<br />" + "更新时间：" + clouddata._updatetime,
+                    size: new AMap.Size(0, 0),
+                    autoMove: true,
+                    offset: new AMap.Pixel(0, -25)
+                });
+                infoWindow.open(map, clouddata._location);
+            });
+        });
+    }*/
+
         geolocation = new AMap.Geolocation({
             enableHighAccuracy: true,//是否使用高精度定位，默认:true
             timeout: 10000,          //超过10秒后停止定位，默认：无穷大
@@ -73,6 +100,24 @@
         }
         });
     }
+
+    /*function s()
+    {
+        //alert(latitude);
+        $.post({
+        url:"{{ route('users.used',$user->id)}}",
+        data:{
+            longitude:117.1234567,
+            latitude:34.1234567,
+            _token: "{{ csrf_token() }}"
+        },
+        success:function(res){
+            alert(res.message);
+            //跳转
+            window.location.href="{{ route('users.rider',$user) }}";
+        }
+        });
+    }*/
     
 </script>
 </body>

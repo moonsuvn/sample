@@ -34,7 +34,9 @@
 </div>
 <script type="text/javascript">
     var map = new AMap.Map("container", {
-        resizeEnable: true
+        resizeEnable: true,
+        center: [117.14509,34.214571],//地图中心点
+        zoom:17
     });
     //自动搜索
     var autostart = new AMap.Autocomplete({
@@ -49,7 +51,36 @@
     var riding = new AMap.Riding({
         map: map,
         panel: "panel"
-    }); 
+    });
+
+
+    addCloudLayer();  //叠加云数据图层
+    function addCloudLayer() {
+        //加载云图层插件
+        map.plugin('AMap.CloudDataLayer', function() {
+            var layerOptions = {
+                clickable: true
+            };
+            var cloudDataLayer = new AMap.CloudDataLayer('5b060ee4305a2a668877b2eb', layerOptions); //实例化云图层类
+            cloudDataLayer.setMap(map); //叠加云图层到地图
+            AMap.event.addListener(cloudDataLayer, 'click', function(result) {
+                var clouddata = result.data;
+                var photo = [];
+                if (clouddata._image[0]) {//如果有上传的图片
+                    photo = ['<img width=240 height=100 src="' + clouddata._image[0]._preurl + '"><br>'];
+                }
+                var infoWindow = new AMap.InfoWindow({
+                    content: "<font class='title'>" + clouddata._name + "</font><hr/>" + photo.join("") + "地址：" + clouddata._address + "<br />" + "创建时间：" + clouddata._createtime + "<br />" + "更新时间：" + clouddata._updatetime,
+                    size: new AMap.Size(0, 0),
+                    autoMove: true,
+                    offset: new AMap.Pixel(0, -25)
+                });
+                infoWindow.open(map, clouddata._location);
+            });
+        });
+    } 
+
+
     map.plugin('AMap.Geolocation', function() {
         geolocation = new AMap.Geolocation({
             enableHighAccuracy: true,//是否使用高精度定位，默认:true
