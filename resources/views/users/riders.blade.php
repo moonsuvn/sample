@@ -27,13 +27,14 @@
                                     <td class="text-center"><strong>{{$rider->id}}</strong></td>
 
                                     <td>{{$rider->start_at}}</td> <td>{{$rider->end_at}}</td> <td>{{$rider->money}}</td>
+                                    <td><a href="{{ route('users.cloudtrack',$rider->id) }}">查看轨迹</a></td>
                                     
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 @else
-                    <h3 class="text-center alert alert-info">Empty!</h3>
+                    <h3 class="text-center alert alert-info">暂无记录</h3>
                 @endif
             </div>
         </div>

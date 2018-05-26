@@ -262,7 +262,50 @@ class UsersController extends Controller
         //$riders = DB::table('riders')->get();
         return view('users.riders', compact('riders'));
      
-
     }
+
+    public function cloudtrackpage(User $user,Rider $rider,Request $request)
+    {
+        //$rider_id=$rider->id;
+        return view('users.cloudtrack',compact('rider_id'));
+    }
+
+    public function cloudtrack(User $user,Rider $rider,Request $request)
+    {
+        $rider_id=$rider->id;
+        return view('users.cloudtrack',compact('rider_id'));
+    }
+
+    public function setcloudtrack(User $user,Rider $rider,Request $request)
+    {
+        $rider_id=$rider->id;
+        $value=Rider::where('id',$rider_id)->first();
+        $user_id=$value->user_id;
+        $start_time=$value->start_at;
+        $end_time=$value->end_at;
+        $location = [];
+
+        $url="http://yuntuapi.amap.com/datasearch/local";
+        $key="4b6bf63daf54c876f1603104c504d4f4";
+        $tableid="5b08ca9c7bbf1916a5a95851";
+        $keywords=$user_id;
+        $city="全国";
+        $url=$url.'?key='.$key.'&tableid='.$tableid.'&keywords='.$keywords.'&city='.$city;
+        /* 发送请求 */
+        $get = file_get_contents($url);
+        $result = json_decode(($get));
+        $status = $result->status;//请求状态
+        $message = $result->info;//请求返回信息
+        $count = $result->count;//返回结果总数目
+        $data = $result->datas;//返回的数据
+
+        for ($i=0; $i < count($data); $i++) { 
+            $_location=$data[$i]->_location;
+            $location[$i]=$_location;
+        }
+        return response([
+            'message'=>$location]);
+    }
+
 
 }

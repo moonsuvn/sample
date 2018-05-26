@@ -31,6 +31,8 @@ Route::patch('/users/{user}/riding','UsersController@riding')->name('users.ridin
 Route::get('/users/{user}/bikes/{value}/using','UsersController@using')->name('users.using');
 Route::post('users/{user}/used','UsersController@used')->name('users.used');
 Route::post('users/{user}/track','UsersController@track')->name('users.track');
+Route::get('users/{rider}/cloudtrack','UsersController@cloudtrack')->name('users.cloudtrack');
+Route::post('users/{rider}/cloudtrack','UsersController@setcloudtrack')->name('users.setcloudtrack');
 Route::get('/users/{user}/riders','UsersController@riders')->name('users.riders');
 //Route::patch('users/{user}/bikes/{bike}/used','UsersController@used')->name('users.used');
 //Route::get('/users/{user}/riding','BikesController@riding')->name('bikes.riding');
