@@ -51,7 +51,7 @@
             });
         });
     }*/
-
+    map.plugin('AMap.Geolocation',function(){
         geolocation = new AMap.Geolocation({
             enableHighAccuracy: true,//是否使用高精度定位，默认:true
             timeout: 10000,          //超过10秒后停止定位，默认：无穷大
@@ -64,6 +64,7 @@
         //watchPosition();//持续定位；
         AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
         AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    });
     //解析定位结果
     function onComplete(data) {
         longitude=data.position.getLng();
@@ -116,6 +117,7 @@
     function timedCount()
     {
         document.getElementById('txt').value=c;
+        map.plugin('AMap.Geolocation',function(){
         geolocation = new AMap.Geolocation({
             enableHighAccuracy: true,//是否使用高精度定位，默认:true
             timeout: 10000,          //超过10秒后停止定位，默认：无穷大
@@ -125,6 +127,7 @@
         geolocation.getCurrentPosition();
         //watchPosition();//持续定位；
         AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+    });
         function onComplete(data) {
         scatterlongitude=data.position.getLng();
         scatterlatitude=data.position.getLat();
