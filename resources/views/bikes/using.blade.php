@@ -20,8 +20,6 @@
     
     var c=0;
     var t;
-    var longitude=117.1234567;
-    var latitude=34.1234567;
     var map, geolocation;
     //加载地图，调用浏览器定位服务
     map = new AMap.Map('container', {
@@ -68,18 +66,10 @@
         AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
     //解析定位结果
     function onComplete(data) {
-        var str=['定位成功'];
         longitude=data.position.getLng();
         latitude=data.position.getLat();
         longitude=float(longitude);
         latitude=float(latitude);
-        str.push('经度：' + data.position.getLng());
-        str.push('纬度：' + data.position.getLat());
-        if(data.accuracy){
-             str.push('精度：' + data.accuracy + ' 米');
-        }//如为IP精确定位结果则没有精度信息
-        str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
-        document.getElementById('tip').innerHTML = str.join('<br>');
     }
     //解析定位错误信息
     function onError(data) {
@@ -126,16 +116,31 @@
     function timedCount()
     {
         document.getElementById('txt').value=c;
+        geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            buttonPosition:'RB'
+        });
+        geolocation.getCurrentPosition();
+        //watchPosition();//持续定位；
+        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+        function onComplete(data) {
+        scatterlongitude=data.position.getLng();
+        scatterlatitude=data.position.getLat();
+        scatterlongitude=float(scatterlongitude);
+        scatterlatitude=float(scatterlatitude);
+    }
         $.post({
             url:"{{ route('users.track',$user->id)}}",
             data:{
-                longitude:longitude,
-                latitude:latitude,
+                longitude:scatterlongitude,
+                latitude:scatterlatitude,
                 _token:"{{ csrf_token() }}"
             },
-            success:function(res){
-            }
+            success:function(){}
         });
+        c+=1;
         t=setTimeout("timedCount()",1000);
     }
 
