@@ -10,14 +10,18 @@
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
-<button onclick="s()" id="ajax">立即还车</button>
+<button onclick="s();stopCount()" id="ajax">立即还车</button>
+<button onclick="timedCount()">开始计时</button>
+<input type="text" id="txt" >
 <div id='container' style="margin-top:60px"></div>
 <div id="tip"></div>
 
 <script type="text/javascript">
-/***************************************
-由于Chrome、IOS10等已不再支持非安全域的浏览器定位请求，为保证定位成功率和精度，请尽快升级您的站点到HTTPS。
-***************************************/
+    
+    var c=0;
+    var t;
+    var longitude=117.1234567;
+    var latitude=34.1234567;
     var map, geolocation;
     //加载地图，调用浏览器定位服务
     map = new AMap.Map('container', {
@@ -59,7 +63,7 @@
         });
         map.addControl(geolocation);
         geolocation.getCurrentPosition();
-        
+        //watchPosition();//持续定位；
         AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
         AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
     //解析定位结果
@@ -83,7 +87,7 @@
     }
       
 
-    function s()
+    /*function s()
     {
         //alert(latitude);
         $.post({
@@ -99,9 +103,9 @@
             window.location.href="{{ route('users.rider',$user) }}";
         }
         });
-    }
+    }*/
 
-    /*function s()
+    function s()
     {
         //alert(latitude);
         $.post({
@@ -117,7 +121,33 @@
             window.location.href="{{ route('users.rider',$user) }}";
         }
         });
-    }*/
+    }
+
+    function timedCount()
+    {
+        document.getElementById('txt').value=c;
+        $.post({
+            url:"{{ route('users.track',$user->id)}}",
+            data:{
+                longitude:longitude,
+                latitude:latitude,
+                _token:"{{ csrf_token() }}"
+            },
+            success:function(res){
+            }
+        });
+        longitude+=0.01;
+        latitude+=0.01;
+        c=c+1;
+        t=setTimeout("timedCount()",1000);
+    }
+
+    function stopCount()
+    {
+
+        clearTimeout(t);
+
+    }
     
 </script>
 </body>

@@ -70,7 +70,7 @@
                     photo = ['<img width=240 height=100 src="' + clouddata._image[0]._preurl + '"><br>'];
                 }
                 var infoWindow = new AMap.InfoWindow({
-                    content: "<font class='title'>" + clouddata._name + "</font><hr/>" + photo.join("") + "地址：" + clouddata._address + "<br />" + "创建时间：" + clouddata._createtime + "<br />" + "更新时间：" + clouddata._updatetime,
+                    content: "<font class='title'>" + clouddata._name + "</font><hr/>" + photo.join("") + "地址：" + clouddata._address + "<br />" +"单车状态：" + clouddata.status + "<br />"+ "创建时间：" + clouddata._createtime + "<br />" + "更新时间：" + clouddata._updatetime,
                     size: new AMap.Size(0, 0),
                     autoMove: true,
                     offset: new AMap.Pixel(0, -25)
@@ -94,26 +94,15 @@
         AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
         AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
     });
-    /*function search()
-    {
-    var inputstart=document.getElementById('starttext');
-    var inputend=document.getElementById('endtext');
-    var startvalue=inputstart.value;
-    var endvalue=inputend.value;
-    riding.search([
-                     {keyword: startvalue,city:'徐州'},
-                     //第一个元素city缺省时取transOptions的city属性
-                     {keyword: endvalue,city:'徐州'}
-                     //第二个元素city缺省时取transOptions的cityd属性,
-                     //没有cityd属性时取city属性
-                    ]);
-    }*/
+    function onComplete(data){
+        var str=['定位成功'];
+    }
     //为keyListener方法注册按键事件  
     document.onkeydown=keyListener;   
   
     function keyListener(e){   
   
-        //  当按下回车键，执行我们的代码  
+        //  当按下回车键，执行代码  
         if(e.keyCode == 13){   
   
         var inputstart=document.getElementById('starttext');

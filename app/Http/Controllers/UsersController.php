@@ -154,6 +154,18 @@ class UsersController extends Controller
             $rider->start_lng = $start_lng;
             $rider->start_lat = $start_lat;
             $rider->save();
+
+            $data = array('_id' =>$bike_id ,'status' =>'正在使用中' );
+            $data=json_encode($data);
+            $url="http://yuntuapi.amap.com/datamanage/data/update";
+            $key="4b6bf63daf54c876f1603104c504d4f4";
+            $tableid="5b060ee4305a2a668877b2eb";
+            $url=$url.'?key='.$key.'&tableid='.$tableid.'&data='.$data;
+            /* 发送请求 */
+            $get = file_get_contents($url);
+            $result = json_decode(($get));
+            $status = $result->status;//请求状态
+            $message = $result->info;//请求返回信息
             //dd($bike_id);
             session()->flash('success','开锁成功正在计时');
             return redirect()->route('users.using',[$user->id,$value->id,'user'=>$user]);
@@ -185,8 +197,7 @@ class UsersController extends Controller
         DB::table('bikes')->where('id',$bike_id)->update(['is_riding' => 0]);
         Scatter::where('id',$bike_id)->update(['lnglat' => $scatter]);
 
-
-        $data = array('_id' =>$bike_id ,'_location' =>$scatter );
+        $data = array('_id' =>$bike_id ,'_location' =>$scatter,'status' =>'空闲' );
         $data=json_encode($data);
         $url="http://yuntuapi.amap.com/datamanage/data/update";
         $key="4b6bf63daf54c876f1603104c504d4f4";
@@ -218,6 +229,30 @@ class UsersController extends Controller
         Rider::where('user_id',$user->id)->orderByDesc('id')->first()->update(['money'=>$money]);
         return response([
             'message'=>'还车成功']);
+    }
+
+    public function track(User $user,Bike $bike,BikeRequest $request,Rider $rider)
+    {
+        $lnging=$request->input('longitude'); 
+        $lating=$request->input('latitude');
+        $scatter_lng=(string)$lnging;
+        $scatter_lat=(string)$lating;
+        $scatter=$scatter_lng.','.$scatter_lat;
+        $user_id=(string)$user->id;
+        $bike_id=Rider::where('user_id',$user->id)->orderByDesc('id')->first()->bike_id;
+        $data = array('_name' =>$user_id ,'_location' =>$scatter);
+        $data=json_encode($data);
+        $url="http://yuntuapi.amap.com/datamanage/data/create";
+        $key="4b6bf63daf54c876f1603104c504d4f4";
+        $tableid="5b08ca9c7bbf1916a5a95851";
+        $url=$url.'?key='.$key.'&tableid='.$tableid.'&data='.$data;
+        /* 发送请求 */
+        $get = file_get_contents($url);
+        $result = json_decode(($get));
+        $status = $result->status;//请求状态
+        $message = $result->info;//请求返回信息
+        return response([
+            'message'=>'定位成功']);
     }
 
     public function riders(User $user,Rider $rider,Request $request)

@@ -30,6 +30,7 @@ Route::get('/users/{user}/rider','UsersController@rider')->name('users.rider');
 Route::patch('/users/{user}/riding','UsersController@riding')->name('users.riding');
 Route::get('/users/{user}/bikes/{value}/using','UsersController@using')->name('users.using');
 Route::post('users/{user}/used','UsersController@used')->name('users.used');
+Route::post('users/{user}/track','UsersController@track')->name('users.track');
 Route::get('/users/{user}/riders','UsersController@riders')->name('users.riders');
 //Route::patch('users/{user}/bikes/{bike}/used','UsersController@used')->name('users.used');
 //Route::get('/users/{user}/riding','BikesController@riding')->name('bikes.riding');
