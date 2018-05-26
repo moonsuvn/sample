@@ -87,7 +87,7 @@
     }
       
 
-    /*function s()
+    function s()
     {
         //alert(latitude);
         $.post({
@@ -103,9 +103,9 @@
             window.location.href="{{ route('users.rider',$user) }}";
         }
         });
-    }*/
+    }
 
-    function s()
+    /*function s()
     {
         //alert(latitude);
         $.post({
@@ -121,7 +121,7 @@
             window.location.href="{{ route('users.rider',$user) }}";
         }
         });
-    }
+    }*/
 
     function timedCount()
     {
@@ -136,9 +136,6 @@
             success:function(res){
             }
         });
-        longitude+=0.01;
-        latitude+=0.01;
-        c=c+1;
         t=setTimeout("timedCount()",1000);
     }
 

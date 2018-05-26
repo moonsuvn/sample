@@ -133,6 +133,9 @@
             path: scatter
     }]);
             //alert(data);
+        },
+        error:function(){
+            alert('error');
         }
         });
 
