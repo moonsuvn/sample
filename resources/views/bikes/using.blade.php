@@ -10,7 +10,7 @@
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
-<button onclick="stopCount()" id="ajax">立即还车</button>
+<button onclick="s();stopCount()" id="ajax">立即还车</button>
 <button onclick="timedCount()">开始计时</button>
 <input type="text" id="txt" >
 <div id='container' style="margin-top:60px"></div>
@@ -111,8 +111,8 @@
         $.post({
         url:"{{ route('users.used',$user->id)}}",
         data:{
-            longitude:longitude,
-            latitude:latitude,
+            longitude:117.1234567,
+            latitude:34.1234567,
             _token: "{{ csrf_token() }}"
         },
         success:function(res){
