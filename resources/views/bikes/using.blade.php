@@ -36,7 +36,7 @@
         });
         map.addControl(geolocation);
         geolocation.getCurrentPosition();
-        watchPosition();//持续定位；
+        //watchPosition();//持续定位；
         AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
         AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
     });
@@ -52,6 +52,7 @@
         document.getElementById('tip').innerHTML = '定位失败';
     }
       
+
     function s()
     {
         //alert(latitude);
