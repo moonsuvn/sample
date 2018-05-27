@@ -120,7 +120,8 @@
             //跳转
             window.location.href="{{ route('users.rider',$user) }}";
         }
-        });
+        })
+    }
 
     function stopCount()
     {
