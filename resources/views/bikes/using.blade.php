@@ -10,7 +10,7 @@
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
-<button onclick="s();stopCount()" id="ajax">立即还车</button>
+<button onclick="stopCount()" id="ajax">立即还车</button>
 <button onclick="timedCount()">开始计时</button>
 <input type="text" id="txt" >
 <div id='container' style="margin-top:60px"></div>
@@ -121,7 +121,7 @@
             window.location.href="{{ route('users.rider',$user) }}";
         }
         });
-        
+
     function stopCount()
     {
 
