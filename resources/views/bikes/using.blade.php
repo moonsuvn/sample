@@ -74,28 +74,11 @@
     function timedCount()
     {
         document.getElementById('txt').value=c;
-        map.plugin('AMap.Geolocation',function(){
-        geolocation = new AMap.Geolocation({
-            enableHighAccuracy: true,//是否使用高精度定位，默认:true
-            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-            buttonPosition:'RB'
-        });
-        geolocation.getCurrentPosition();
-        //watchPosition();//持续定位；
-        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
-    });
-        function onComplete(data) {
-        scatterlongitude=data.position.getLng();
-        scatterlatitude=data.position.getLat();
-        scatterlongitude=float(scatterlongitude);
-        scatterlatitude=float(scatterlatitude);
-    }
         $.post({
             url:"{{ route('users.track',$user->id)}}",
             data:{
-                longitude:scatterlongitude,
-                latitude:scatterlatitude,
+                longitude:longitude,
+                latitude:latitude,
                 _token:"{{ csrf_token() }}"
             },
             success:function(){}
