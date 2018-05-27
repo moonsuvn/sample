@@ -25,7 +25,7 @@
     map = new AMap.Map('container', {
         resizeEnable: true
     });
-    function timeCount(){
+    function timedCount(){
         document.getElementById('txt').value=c;
     map.plugin('AMap.Geolocation',function(){
         geolocation = new AMap.Geolocation({
@@ -87,7 +87,7 @@
     c+=1;
     t=setTimeout("timedCount()",1000);
     }
-    
+
     /*function timedCount()
     {
         document.getElementById('txt').value=c;
