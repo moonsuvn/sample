@@ -66,7 +66,7 @@
         });
       
 
-    function s()
+    /*function s()
     {
         //alert(latitude);
         $.post({
@@ -82,7 +82,7 @@
             window.location.href="{{ route('users.rider',$user) }}";
         }
         });
-    }
+    }*/
 
     c+=1;
     t=setTimeout("timedCount()",1000);
@@ -105,7 +105,23 @@
         c+=1;
         t=setTimeout("timedCount()",1000);
     }*/
-
+    function s()
+    {
+        //alert(latitude);
+        $.post({
+        url:"{{ route('users.used',$user->id)}}",
+        data:{
+            longitude:longitude,
+            latitude:latitude,
+            _token: "{{ csrf_token() }}"
+        },
+        success:function(res){
+            alert(res.message);
+            //跳转
+            window.location.href="{{ route('users.rider',$user) }}";
+        }
+        });
+        
     function stopCount()
     {
 
