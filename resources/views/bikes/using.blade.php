@@ -25,7 +25,8 @@
     map = new AMap.Map('container', {
         resizeEnable: true
     });
-
+    function timeCount(){
+        document.getElementById('txt').value=c;
     map.plugin('AMap.Geolocation',function(){
         geolocation = new AMap.Geolocation({
             enableHighAccuracy: true,//是否使用高精度定位，默认:true
@@ -51,6 +52,18 @@
     function onError(data) {
         document.getElementById('tip').innerHTML = '定位失败';
     }
+
+    $.post({
+            url:"{{ route('users.track',$user->id)}}",
+            data:{
+                longitude:longitude,
+                latitude:latitude,
+                _token:"{{ csrf_token() }}"
+            },
+            success:function(){
+
+            }
+        });
       
 
     function s()
@@ -71,7 +84,11 @@
         });
     }
 
-    function timedCount()
+    c+=1;
+    t=setTimeout("timedCount()",1000);
+    }
+    
+    /*function timedCount()
     {
         document.getElementById('txt').value=c;
         $.post({
@@ -81,11 +98,13 @@
                 latitude:latitude,
                 _token:"{{ csrf_token() }}"
             },
-            success:function(){}
+            success:function(){
+
+            }
         });
         c+=1;
         t=setTimeout("timedCount()",1000);
-    }
+    }*/
 
     function stopCount()
     {
