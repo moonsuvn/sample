@@ -1,7 +1,16 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
+<header class="navbar navbar-fixed-top navbar-inverse" role="navigation">
   <div class="container">
     <div class="col-md-offset-1 col-md-10 col-xs-10">
+      <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+        <span class="sr-only">切换导航</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
       <a href="/" id="logo">App</a>
+     </div>
       <nav>
         <ul class="nav navbar-nav navbar-right">
 
