@@ -9,9 +9,10 @@
         <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       </button>
-      <a href="/" id="logo">App</a>
+      <a href="/" id="logo" class="navbar-brand nav-title">App</a>
      </div>
       <nav>
+        <div class="collapse navbar-collapse" id="navbar-menu">
         <ul class="nav navbar-nav navbar-right">
 
           @if (Auth::check())
@@ -45,6 +46,7 @@
             <li><a href="{{ route('signup') }}">注册</a></li>
           @endif
         </ul>
+      </div>
       </nav>
     </div>
   </div>
