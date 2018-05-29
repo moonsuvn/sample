@@ -2,14 +2,14 @@
   <div class="container">
     <div class="col-md-offset-1 col-md-10 col-xs-10">
       <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu" style="padding-right: 20px">
         <span class="sr-only">切换导航</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       </button>
-      <a href="/" id="logo" class="navbar-brand nav-title">App</a>
+      <a href="/" id="logo" class="navbar-brand nav-title" style="padding-top:14px ">App</a>
      </div>
       <nav>
         <div class="collapse navbar-collapse" id="navbar-menu">
