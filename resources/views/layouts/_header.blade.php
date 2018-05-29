@@ -2,7 +2,7 @@
   <div class="container" style="padding-right: 0px">
     <div class="col-md-offset-1 col-md-10 col-xs-10">
       <div class="navbar-header" >
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu" style="padding-right: 0px">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
         <span class="sr-only">切换导航</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
