@@ -69,8 +69,8 @@
         $.post({
         url:"{{ route('users.used',$user->id)}}",
         data:{
-            longitude:longitude,
-            latitude:latitude,
+            longitude:117.11470,
+            latitude:34.2118,
             _token: "{{ csrf_token() }}"
         },
         success:function(res){
