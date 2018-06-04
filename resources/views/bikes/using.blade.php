@@ -11,7 +11,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
 <button onclick="s()" id="ajax">立即还车</button>
-<div id='container' style="margin-top:60px"></div>
+<div id='container' style="margin-top:40px"></div>
 <div id="tip"></div>
 
 <script type="text/javascript">
@@ -69,8 +69,8 @@
         $.post({
         url:"{{ route('users.used',$user->id)}}",
         data:{
-            longitude:117.111111,
-            latitude:34.1222222,
+            longitude:longitude,
+            latitude:latitude,
             _token: "{{ csrf_token() }}"
         },
         success:function(res){
