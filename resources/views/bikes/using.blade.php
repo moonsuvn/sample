@@ -10,9 +10,7 @@
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
-<button onclick="s();stopCount()" id="ajax">立即还车</button>
-<button onclick="timedCount()">开始计时</button>
-<input type="text" id="txt" >
+<button onclick="s()" id="ajax">立即还车</button>
 <div id='container' style="margin-top:60px"></div>
 <div id="tip"></div>
 
@@ -25,7 +23,6 @@
     map = new AMap.Map('container', {
         resizeEnable: true
     });
-    function timedCount(){
         document.getElementById('txt').value=c;
     map.plugin('AMap.Geolocation',function(){
         geolocation = new AMap.Geolocation({
@@ -53,7 +50,7 @@
         document.getElementById('tip').innerHTML = '定位失败';
     }
 
-    $.post({
+    /*$.post({
             url:"{{ route('users.track',$user->id)}}",
             data:{
                 longitude:longitude,
@@ -63,56 +60,17 @@
             success:function(){
 
             }
-        });
+        });*/
       
 
-    /*function s()
-    {
-        //alert(latitude);
-        $.post({
-        url:"{{ route('users.used',$user->id)}}",
-        data:{
-            longitude:longitude,
-            latitude:latitude,
-            _token: "{{ csrf_token() }}"
-        },
-        success:function(res){
-            alert(res.message);
-            //跳转
-            window.location.href="{{ route('users.rider',$user) }}";
-        }
-        });
-    }*/
-
-    c+=1;
-    t=setTimeout("timedCount()",1000);
-    }
-
-    /*function timedCount()
-    {
-        document.getElementById('txt').value=c;
-        $.post({
-            url:"{{ route('users.track',$user->id)}}",
-            data:{
-                longitude:longitude,
-                latitude:latitude,
-                _token:"{{ csrf_token() }}"
-            },
-            success:function(){
-
-            }
-        });
-        c+=1;
-        t=setTimeout("timedCount()",1000);
-    }*/
     function s()
     {
         //alert(latitude);
         $.post({
         url:"{{ route('users.used',$user->id)}}",
         data:{
-            longitude:117.1234567,
-            latitude:34.1234567,
+            longitude:117.111111,
+            latitude:34.1222222,
             _token: "{{ csrf_token() }}"
         },
         success:function(res){
@@ -120,14 +78,7 @@
             //跳转
             window.location.href="{{ route('users.rider',$user) }}";
         }
-        })
-    }
-
-    function stopCount()
-    {
-
-        clearTimeout(t);
-
+        });
     }
     
 </script>

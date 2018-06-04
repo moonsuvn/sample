@@ -70,7 +70,7 @@
                     photo = ['<img width=240 height=100 src="' + clouddata._image[0]._preurl + '"><br>'];
                 }
                 var infoWindow = new AMap.InfoWindow({
-                    content: "<font class='title'>" + clouddata._name + "</font><hr/>" + photo.join("") + "地址：" + clouddata._address + "<br />" +"单车状态：" + clouddata.status + "<br />"+ "创建时间：" + clouddata._createtime + "<br />" + "更新时间：" + clouddata._updatetime,
+                    content: "<font class='title'>" + clouddata._name + "</font><hr/>" + photo.join("") +  "<br />" +"单车状态：" + clouddata.status + "<br />"+ "创建时间：" + clouddata._createtime + "<br />" + "更新时间：" + clouddata._updatetime,
                     size: new AMap.Size(0, 0),
                     autoMove: true,
                     offset: new AMap.Pixel(0, -25)
